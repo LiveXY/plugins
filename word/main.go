@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/livexy/plugins/plugin/worder"
+	"github.com/livexy/plugin/worder"
 	plug "github.com/livexy/plugins/word/plugin"
 )
 

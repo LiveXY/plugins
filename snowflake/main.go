@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/livexy/plugins/plugin/ider"
+	"github.com/livexy/plugin/ider"
 	plug "github.com/livexy/plugins/snowflake/plugin"
 )
 

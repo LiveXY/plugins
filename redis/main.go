@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/livexy/plugins/plugin/cacher"
+	"github.com/livexy/plugin/cacher"
 	plug "github.com/livexy/plugins/redis/plugin"
 
 	"go.uber.org/zap"

@@ -3,7 +3,7 @@ package plugin
 import (
 	"sync"
 
-	"github.com/livexy/plugins/plugin/ider"
+	"github.com/livexy/plugin/ider"
 
 	"github.com/bwmarrin/snowflake"
 )

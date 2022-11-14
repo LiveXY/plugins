@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/livexy/plugins/plugin/cacher"
+	"github.com/livexy/plugin/cacher"
 
 	"github.com/livexy/linq"
 

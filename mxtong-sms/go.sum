@@ -1,0 +1,10 @@
+github.com/livexy/pkg v1.0.2 h1:q5lLK4PsF0hphxCKmD9sqxJsI2cOPP0szwkhkLm1wm8=
+github.com/livexy/pkg v1.0.2/go.mod h1:eK4fooHReMC5srBjo4l9sM5joY2022O2g1hPLLLE+nk=
+github.com/livexy/plugin v1.0.0 h1:rsl3VETEoiC6WpnspyF5N9oR4w+fN7McHiQ1zt21I20=
+github.com/livexy/plugin v1.0.0/go.mod h1:FeC9YPmi9ClT6x4OVNkZDX9YckW7LwRO/kf39tA1foU=
+github.com/orcaman/concurrent-map/v2 v2.0.1 h1:jOJ5Pg2w1oeB6PeDurIYf6k9PQ+aTITr/6lP/L/zp6c=
+github.com/orcaman/concurrent-map/v2 v2.0.1/go.mod h1:9Eq3TG2oBe5FirmYWQfYO5iH1q0Jv47PLaNK++uCdOM=
+github.com/valyala/bytebufferpool v1.0.0 h1:GqA5TC/0021Y/b9FG4Oi9Mr3q7XYx6KllzawFIhcdPw=
+github.com/valyala/bytebufferpool v1.0.0/go.mod h1:6bBcMArwyJ5K/AmCkWv1jt77kVWyCJ6HpOuEn7z0Csc=
+github.com/valyala/fasttemplate v1.2.2 h1:lxLXG0uE3Qnshl9QyaK6XJxMXlQZELvChBOCmQD0Loo=
+github.com/valyala/fasttemplate v1.2.2/go.mod h1:KHLXt3tVN2HBp8eijSv/kGJopbvo7S+qRAEEKiv+SiQ=

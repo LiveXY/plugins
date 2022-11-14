@@ -4,7 +4,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/livexy/plugins/plugin/osser"
+	"github.com/livexy/plugin/osser"
 )
 
 func NewLocalFS(cfg osser.OSSConfig) (osser.OSSer, error) {

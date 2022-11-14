@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/livexy/plugin/streamer"
 	plug "github.com/livexy/plugins/gob-stream/plugin"
-	"github.com/livexy/plugins/plugin/streamer"
 )
 
 var Plugin plugin

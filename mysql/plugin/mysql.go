@@ -3,7 +3,7 @@ package plugin
 import (
 	"time"
 
-	"github.com/livexy/plugins/plugin/dber"
+	"github.com/livexy/plugin/dber"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

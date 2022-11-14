@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/gob"
 
-	"github.com/livexy/plugins/plugin/streamer"
+	"github.com/livexy/plugin/streamer"
 )
 
 type gobStream struct {}

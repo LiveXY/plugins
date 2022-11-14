@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/livexy/plugins/plugin/worder"
+	"github.com/livexy/plugin/worder"
 
 	"github.com/gonfva/docxlib"
 )

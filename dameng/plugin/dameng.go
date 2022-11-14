@@ -3,8 +3,8 @@ package plugin
 import (
 	"time"
 
+	"github.com/livexy/plugin/dber"
 	"github.com/livexy/plugins/dameng/dameng"
-	"github.com/livexy/plugins/plugin/dber"
 
 	"gitee.com/chunanyong/dm"
 	"gorm.io/gorm"

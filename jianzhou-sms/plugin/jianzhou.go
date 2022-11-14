@@ -6,7 +6,7 @@ import (
 
 	"github.com/livexy/pkg/request"
 
-	"github.com/livexy/plugins/plugin/smser"
+	"github.com/livexy/plugin/smser"
 
 	"github.com/livexy/pkg/strx"
 	"github.com/livexy/pkg/template"

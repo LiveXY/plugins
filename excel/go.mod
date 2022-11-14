@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/livexy/pkg v1.0.1
+	github.com/livexy/plugin v1.0.0
 	github.com/xuri/excelize/v2 v2.6.1
 )
 

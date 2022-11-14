@@ -1,7 +1,7 @@
 package plugin
 
 import (
-	"github.com/livexy/plugins/plugin/jsoner"
+	"github.com/livexy/plugin/jsoner"
 
 	"github.com/bytedance/sonic"
 )

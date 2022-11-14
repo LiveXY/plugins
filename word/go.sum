@@ -1,0 +1,6 @@
+github.com/golang/glog v0.0.0-20210429001901-424d2337a529 h1:2voWjNECnrZRbfwXxHB1/j8wa6xdKn85B5NzgVL/pTU=
+github.com/golang/glog v0.0.0-20210429001901-424d2337a529/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
+github.com/gonfva/docxlib v0.0.0-20210517191039-d8f39cecf1ad h1:eW9Uqwzg3XdbuljlUSydDF9grQIlOXsjCVjmWCz+Wps=
+github.com/gonfva/docxlib v0.0.0-20210517191039-d8f39cecf1ad/go.mod h1:PP43g0DZEMAA3U9VaLoO/buJL1bJoQ2fMLYEZ6RC0fA=
+github.com/livexy/plugin v1.0.0 h1:rsl3VETEoiC6WpnspyF5N9oR4w+fN7McHiQ1zt21I20=
+github.com/livexy/plugin v1.0.0/go.mod h1:FeC9YPmi9ClT6x4OVNkZDX9YckW7LwRO/kf39tA1foU=

@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/livexy/plugin/dber"
 	plug "github.com/livexy/plugins/mysql/plugin"
-	"github.com/livexy/plugins/plugin/dber"
 )
 
 var Plugin plugin

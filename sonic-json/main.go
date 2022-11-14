@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/livexy/plugins/plugin/jsoner"
+	"github.com/livexy/plugin/jsoner"
 	plug "github.com/livexy/plugins/sonic-json/plugin"
 )
 

@@ -1,4 +1,4 @@
-module github.com/livexy/plugins/gob-stream
+module github.com/livexy/plugins/local-fs
 
 go 1.19
 

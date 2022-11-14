@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/livexy/plugin/osser"
 	plug "github.com/livexy/plugins/local-fs/plugin"
-	"github.com/livexy/plugins/plugin/osser"
 )
 
 var Plugin plugin

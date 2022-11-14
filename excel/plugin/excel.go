@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/livexy/plugins/plugin/exceler"
+	"github.com/livexy/plugin/exceler"
 
 	"github.com/livexy/pkg/check"
 

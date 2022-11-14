@@ -16,7 +16,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/livexy/plugins/plugin/smser"
+	"github.com/livexy/plugin/smser"
 
 	"github.com/livexy/pkg/bytex"
 	"github.com/livexy/pkg/template"

@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/livexy/plugin/smser"
 	plug "github.com/livexy/plugins/jianzhou-sms/plugin"
-	"github.com/livexy/plugins/plugin/smser"
 )
 
 var Plugin plugin
