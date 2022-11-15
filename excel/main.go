@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/livexy/plugin/exceler"
 	plug "github.com/livexy/plugins/excel/plugin"
+
+	"github.com/livexy/plugin/exceler"
 )
 
 var Plugin plugin
