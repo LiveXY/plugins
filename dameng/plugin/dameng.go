@@ -8,6 +8,7 @@ import (
 
 	"gitee.com/chunanyong/dm"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 	"gorm.io/plugin/dbresolver"
@@ -70,7 +71,10 @@ func (p damengDb) GroupConcat(field string) string {
 	return "wm_concat(" + field + ")"
 }
 func (p damengDb) GetSlots() int {
-	return 65536
+	return 32768
+}
+func (p damengDb) ExAdd(field string, val any) clause.Expr {
+	return gorm.Expr(field + `+?`, val)
 }
 func (p damengDb) ClobScan(clob *dber.Clob, v any) error {
 	switch v.(type) {

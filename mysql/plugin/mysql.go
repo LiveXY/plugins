@@ -7,6 +7,7 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 	"gorm.io/plugin/dbresolver"
@@ -56,7 +57,9 @@ func (p mysqlDb) Init(logname string, dbconf dber.DBConfig, logger logger.Interf
 		SetConnMaxLifetime(time.Hour))
 	return db, err
 }
-
+func (p mysqlDb) ExAdd(field string, val any) clause.Expr {
+	return gorm.Expr(field + `+?`, val)
+}
 func (p mysqlDb) IfNull() string {
 	return "ifnull"
 }

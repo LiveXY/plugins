@@ -11,8 +11,8 @@ require (
 	github.com/golang/snappy v0.0.4
 	github.com/gonfva/docxlib v0.0.0-20210517191039-d8f39cecf1ad
 	github.com/livexy/linq v1.0.1
-	github.com/livexy/pkg v1.0.6
-	github.com/livexy/plugin v1.0.2
+	github.com/livexy/pkg v1.0.7
+	github.com/livexy/plugin v1.0.3
 	github.com/rs/xid v1.4.0
 	github.com/thoas/go-funk v0.9.2
 	github.com/xuri/excelize/v2 v2.6.1
