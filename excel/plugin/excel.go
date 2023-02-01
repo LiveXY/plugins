@@ -55,7 +55,12 @@ func (excel *xlsxExcel) Export(xlsxpath, name string, data [][]string) bool {
 		}
 	}
 	// 冻结第一行
-	xlsx.SetPanes(name, `{"freeze":true,"split":false,"x_split":0,"y_split":1,"top_left_cell":"A2","active_pane":"bottomLeft","panes":[{"sqref":"A1:XFD1","active_cell":"A1","pane":"bottomLeft"}]}`)
+	panes := &excelize.Panes{
+		Freeze: true, Split: false, XSplit: 0, YSplit: 1, TopLeftCell: "A2", ActivePane: "bottomLeft", Panes: []excelize.PaneOptions{
+			{SQRef: "A1:XFD1", ActiveCell: "A1", Pane: "bottomLeft"},
+		},
+	}
+	xlsx.SetPanes(name, panes)
 	xlsx.SetActiveSheet(0)
 	return xlsx.SaveAs(xlsxpath) == nil
 }
@@ -76,7 +81,12 @@ func (excel *xlsxExcel) MultiExport(xlsxpath string, data ...exceler.ExportData)
 			}
 		}
 		// 冻结第一行
-		xlsx.SetPanes(d.Name, `{"freeze":true,"split":false,"x_split":0,"y_split":1,"top_left_cell":"A2","active_pane":"bottomLeft","panes":[{"sqref":"A1:XFD1","active_cell":"A1","pane":"bottomLeft"}]}`)
+		panes := &excelize.Panes{
+			Freeze: true, Split: false, XSplit: 0, YSplit: 1, TopLeftCell: "A2", ActivePane: "bottomLeft", Panes: []excelize.PaneOptions{
+				{SQRef: "A1:XFD1", ActiveCell: "A1", Pane: "bottomLeft"},
+			},
+		}
+		xlsx.SetPanes(d.Name, panes)
 	}
 	xlsx.SetActiveSheet(0)
 	return xlsx.SaveAs(xlsxpath) == nil
@@ -88,7 +98,8 @@ func (excel *xlsxExcel) AdvancedExport(xlsxpath, name string, header []string, n
 	for k, v := range header {
 		nname := names[v]
 		col, _ := excelize.ColumnNumberToName(k + 1)
-		xlsx.AddComment(name, col+"1", `{"author":"Field:","text":"`+v+`"}`)
+		comment := excelize.Comment{Cell: col+"1", Author: "Field:", Text: v}
+		xlsx.AddComment(name, comment)
 		xlsx.SetCellValue(name, col+"1", nname)
 		width := widths[v]
 		if width < 1 {
@@ -97,7 +108,12 @@ func (excel *xlsxExcel) AdvancedExport(xlsxpath, name string, header []string, n
 		xlsx.SetColWidth(name, col, col, width)
 	}
 	// 冻结第一行
-	xlsx.SetPanes(name, `{"freeze":true,"split":false,"x_split":0,"y_split":1,"top_left_cell":"A2","active_pane":"bottomLeft","panes":[{"sqref":"A1:XFD1","active_cell":"A1","pane":"bottomLeft"}]}`)
+	panes := &excelize.Panes{
+		Freeze: true, Split: false, XSplit: 0, YSplit: 1, TopLeftCell: "A2", ActivePane: "bottomLeft", Panes: []excelize.PaneOptions{
+			{SQRef: "A1:XFD1", ActiveCell: "A1", Pane: "bottomLeft"},
+		},
+	}
+	xlsx.SetPanes(name, panes)
 	for i, l := range data {
 		line := strconv.Itoa(i + 2)
 		for k, v := range l {
@@ -130,7 +146,14 @@ func getStruct(xlsx *excelize.File, name string) ([]exceler.Field, error) {
 	if clen == 0 {
 		return list, err
 	}
-	comments := xlsx.GetComments()[name]
+	commentmap, err := xlsx.GetComments()
+	if err != nil {
+		return list, err
+	}
+	comments, ok := commentmap[name]
+	if !ok {
+		return list, err
+	}
 	fields := make(map[int]string)
 	for i, v := range comments {
 		field := v.Text

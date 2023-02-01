@@ -1,10 +1,3 @@
-/*
- * @Author: xionghuachun
- * @Date: 2022-10-11 13:46:27
- * @LastEditors: xionghuachun
- * @LastEditTime: 2022-11-14 17:06:29
- * @Description:
- */
 package plugin
 
 import (

@@ -82,6 +82,6 @@ func (p pgsqlDb) GetCreateID(value any, table, pk string) int64 {
 }
 func getInsertID(db *gorm.DB, table, pk string) int64 {
 	var id int64
-	db.Raw("select LAST_INSERT_ID() as id").Scan(&id)
+	db.Raw("select lastval() as id").Scan(&id)
 	return id
 }

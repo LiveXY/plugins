@@ -25,3 +25,4 @@ build-plugins:
 	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/pgsql.so ./pgsql/main.go
 	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/dameng.so ./dameng/main.go
 	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/mxtong-sms.so ./mxtong-sms/main.go
+	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/chrome2pdf.so ./chrome2pdf/main.go
