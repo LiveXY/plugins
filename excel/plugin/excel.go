@@ -146,12 +146,8 @@ func getStruct(xlsx *excelize.File, name string) ([]exceler.Field, error) {
 	if clen == 0 {
 		return list, err
 	}
-	commentmap, err := xlsx.GetComments()
+	comments, err := xlsx.GetComments(name)
 	if err != nil {
-		return list, err
-	}
-	comments, ok := commentmap[name]
-	if !ok {
 		return list, err
 	}
 	fields := make(map[int]string)

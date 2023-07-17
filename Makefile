@@ -14,9 +14,11 @@ ifeq ($(shell go env GOOS), windows)
 endif
 
 build-plugins:
+	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/excel.so ./excel/main.go
 	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/word.so ./word/main.go
 	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/gob-stream.so ./gob-stream/main.go
 	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/sonic-json.so ./sonic-json/main.go
+	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/go-json.so ./go-json/main.go
 	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/mysql.so ./mysql/main.go
 	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/xid.so ./xid/main.go
 	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/snowflake.so ./snowflake/main.go
