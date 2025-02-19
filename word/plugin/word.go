@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -15,7 +16,7 @@ const fontSize = 11
 
 func (word *docxWord) Read(docxPath string, prefix ...string) ([][]string, error) {
 	var lines [][]string
-	file, err := os.Open(docxPath)
+	file, err := os.Open(filepath.Clean(docxPath))
 	if err != nil {
 		return lines, err
 	}
@@ -75,7 +76,7 @@ func (word *docxWord) Write(docxPath string, title string, data []worder.Questio
 			index++
 		}
 	}
-	f, err := os.Create(docxPath)
+	f, err := os.Create(filepath.Clean(docxPath))
 	if err != nil {
 		return err
 	}

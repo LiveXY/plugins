@@ -21,8 +21,14 @@ func (m Migrator) CurrentDatabase() (name string) {
 }
 
 func (m Migrator) CreateTable(values ...any) error {
-	m.TryQuotifyReservedWords(values)
-	m.TryRemoveOnUpdate(values)
+	err := m.TryQuotifyReservedWords(values)
+	if err != nil {
+		return err
+	}
+	err = m.TryRemoveOnUpdate(values)
+	if err != nil {
+		return err
+	}
 	return m.Migrator.CreateTable(values...)
 }
 
@@ -146,7 +152,10 @@ func (m Migrator) HasColumn(value any, field string) bool {
 }
 
 func (m Migrator) CreateConstraint(value any, name string) error {
-	m.TryRemoveOnUpdate(value)
+	err := m.TryRemoveOnUpdate(value)
+	if err != nil {
+		return err
+	}
 	return m.Migrator.CreateConstraint(value, name)
 }
 
