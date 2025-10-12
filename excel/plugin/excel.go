@@ -56,7 +56,7 @@ func (excel *xlsxExcel) Export(xlsxpath, name string, data [][]string) bool {
 	}
 	// 冻结第一行
 	panes := &excelize.Panes{
-		Freeze: true, Split: false, XSplit: 0, YSplit: 1, TopLeftCell: "A2", ActivePane: "bottomLeft", Panes: []excelize.PaneOptions{
+		Freeze: true, Split: false, XSplit: 0, YSplit: 1, TopLeftCell: "A2", ActivePane: "bottomLeft", Selection: []excelize.Selection{
 			{SQRef: "A1:XFD1", ActiveCell: "A1", Pane: "bottomLeft"},
 		},
 	}
@@ -82,7 +82,7 @@ func (excel *xlsxExcel) MultiExport(xlsxpath string, data ...exceler.ExportData)
 		}
 		// 冻结第一行
 		panes := &excelize.Panes{
-			Freeze: true, Split: false, XSplit: 0, YSplit: 1, TopLeftCell: "A2", ActivePane: "bottomLeft", Panes: []excelize.PaneOptions{
+			Freeze: true, Split: false, XSplit: 0, YSplit: 1, TopLeftCell: "A2", ActivePane: "bottomLeft", Selection: []excelize.Selection{
 				{SQRef: "A1:XFD1", ActiveCell: "A1", Pane: "bottomLeft"},
 			},
 		}
@@ -109,7 +109,7 @@ func (excel *xlsxExcel) AdvancedExport(xlsxpath, name string, header []string, n
 	}
 	// 冻结第一行
 	panes := &excelize.Panes{
-		Freeze: true, Split: false, XSplit: 0, YSplit: 1, TopLeftCell: "A2", ActivePane: "bottomLeft", Panes: []excelize.PaneOptions{
+		Freeze: true, Split: false, XSplit: 0, YSplit: 1, TopLeftCell: "A2", ActivePane: "bottomLeft", Selection: []excelize.Selection{
 			{SQRef: "A1:XFD1", ActiveCell: "A1", Pane: "bottomLeft"},
 		},
 	}
