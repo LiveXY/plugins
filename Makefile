@@ -23,7 +23,7 @@ gosec:
 	~/go/bin/gosec ./...
 
 build-plugins:
-	#go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/opengaussb.so ./opengaussb/main.go
+	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/opengaussb.so ./opengaussb/main.go
 	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/excel.so ./excel/main.go
 	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/word.so ./word/main.go
 	go build -ldflags="-s -w" -buildmode=plugin -o=../../test/bin/plugins/gob-stream.so ./gob-stream/main.go
