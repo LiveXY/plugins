@@ -16,6 +16,7 @@ require (
 	github.com/livexy/linq v1.0.7
 	github.com/livexy/pkg v1.1.2
 	github.com/livexy/plugin v1.0.8
+	github.com/livexy/plugins/opengaussb/opengauss v0.0.0-20260115073646-0815b89376a7
 	github.com/rs/xid v1.6.0
 	github.com/thoas/go-funk v0.9.3
 	github.com/xuri/excelize/v2 v2.10.0
@@ -29,6 +30,7 @@ require (
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
+	gitee.com/opengauss/openGauss-connector-go-pq v1.0.7 // indirect
 	github.com/bytedance/gopkg v0.1.3 // indirect
 	github.com/bytedance/sonic/loader v0.4.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -53,6 +55,7 @@ require (
 	github.com/richardlehane/mscfb v1.0.6 // indirect
 	github.com/richardlehane/msoleps v1.0.6 // indirect
 	github.com/tiendc/go-deepcopy v1.7.2 // indirect
+	github.com/tjfoc/gmsm v1.4.1 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
@@ -65,5 +68,8 @@ require (
 	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
 	golang.org/x/sys v0.40.0 // indirect
+	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 )
+
+replace github.com/livexy/plugins/opengaussb/opengauss => ./opengaussb/opengauss
