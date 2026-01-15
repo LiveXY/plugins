@@ -82,12 +82,12 @@ func (dialector Dialector) DefaultValueOf(field *schema.Field) clause.Expression
 }
 
 func (dialector Dialector) BindVarTo(writer clause.Writer, stmt *gorm.Statement, v interface{}) {
-	writer.WriteByte('$')
-	writer.WriteString(strconv.Itoa(len(stmt.Vars)))
+	_ = writer.WriteByte('$')
+	_, _ = writer.WriteString(strconv.Itoa(len(stmt.Vars)))
 }
 
 func (d Dialector) QuoteTo(writer clause.Writer, str string) {
-	writer.WriteString(str)
+	_, _ = writer.WriteString(str)
 }
 
 func (dialector Dialector) Explain(sql string, vars ...interface{}) string {
@@ -206,8 +206,8 @@ func (dialector Dialector) RollbackTo(tx *gorm.DB, name string) error {
 
 const (
 	ClauseOnConflict = "ON CONFLICT"
-	ClauseValues = "VALUES"
-	ClauseFor = "FOR"
+	ClauseValues     = "VALUES"
+	ClauseFor        = "FOR"
 )
 
 func (dialector Dialector) ClauseBuilders() map[string]clause.ClauseBuilder {
@@ -218,7 +218,7 @@ func (dialector Dialector) ClauseBuilders() map[string]clause.ClauseBuilder {
 				c.Build(builder)
 				return
 			}
-			builder.WriteString("ON DUPLICATE KEY UPDATE ")
+			_, _ = builder.WriteString("ON DUPLICATE KEY UPDATE ")
 			if len(onConflict.DoUpdates) == 0 {
 				if s := builder.(*gorm.Statement).Schema; s != nil {
 					var column clause.Column
@@ -236,15 +236,15 @@ func (dialector Dialector) ClauseBuilders() map[string]clause.ClauseBuilder {
 			}
 			for idx, assignment := range onConflict.DoUpdates {
 				if idx > 0 {
-					builder.WriteByte(',')
+					_ = builder.WriteByte(',')
 				}
 				builder.WriteQuoted(assignment.Column)
-				builder.WriteByte('=')
+				_ = builder.WriteByte('=')
 				if column, ok := assignment.Value.(clause.Column); ok && column.Table == "excluded" {
 					column.Table = ""
-					builder.WriteString("VALUES(")
+					_, _ = builder.WriteString("VALUES(")
 					builder.WriteQuoted(column)
-					builder.WriteByte(')')
+					_ = builder.WriteByte(')')
 				} else {
 					builder.AddVar(builder, assignment.Value)
 				}
@@ -252,7 +252,7 @@ func (dialector Dialector) ClauseBuilders() map[string]clause.ClauseBuilder {
 		},
 		ClauseValues: func(c clause.Clause, builder clause.Builder) {
 			if values, ok := c.Expression.(clause.Values); ok && len(values.Columns) == 0 {
-				builder.WriteString("VALUES()")
+				_, _ = builder.WriteString("VALUES()")
 				return
 			}
 			c.Build(builder)

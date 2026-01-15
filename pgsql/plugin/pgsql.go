@@ -51,14 +51,14 @@ func (p pgsqlDb) Init(logname string, dbconf dber.DBConfig, logger logger.Interf
 	if len(replicas) > 0 {
 		conf.Replicas = replicas
 	}
-	db.Use(dbresolver.Register(conf).
+	err = db.Use(dbresolver.Register(conf).
 		SetMaxIdleConns(dbconf.MaxIdleConns).
 		SetMaxOpenConns(dbconf.MaxOpenConns).
 		SetConnMaxLifetime(time.Hour))
 	return db, err
 }
 func (p pgsqlDb) ExAdd(field string, val any) clause.Expr {
-	return gorm.Expr(`"excluded"."` + field + `"+?`, val)
+	return gorm.Expr(`"excluded"."`+field+`"+?`, val)
 }
 func (p pgsqlDb) IfNull() string {
 	return "coalesce"

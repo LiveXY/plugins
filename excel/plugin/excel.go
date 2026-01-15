@@ -44,14 +44,14 @@ func (excel *xlsxExcel) Read(xlsxpath string, names ...string) ([]exceler.Field,
 
 func (excel *xlsxExcel) Export(xlsxpath, name string, data [][]string) bool {
 	xlsx := excelize.NewFile()
-	xlsx.SetSheetName("Sheet1", name)
+	_ = xlsx.SetSheetName("Sheet1", name)
 	ename, _ := excelize.ColumnNumberToName(len(data[0]))
-	xlsx.SetColWidth(name, "A", ename, 30)
+	_ = xlsx.SetColWidth(name, "A", ename, 30)
 	for i, l := range data {
 		line := strconv.Itoa(i + 1)
 		for k, v := range l {
 			ename, _ := excelize.ColumnNumberToName(k + 1)
-			xlsx.SetCellValue(name, ename+line, v)
+			_ = xlsx.SetCellValue(name, ename+line, v)
 		}
 	}
 	// 冻结第一行
@@ -60,7 +60,7 @@ func (excel *xlsxExcel) Export(xlsxpath, name string, data [][]string) bool {
 			{SQRef: "A1:XFD1", ActiveCell: "A1", Pane: "bottomLeft"},
 		},
 	}
-	xlsx.SetPanes(name, panes)
+	_ = xlsx.SetPanes(name, panes)
 	xlsx.SetActiveSheet(0)
 	return xlsx.SaveAs(xlsxpath) == nil
 }
@@ -68,16 +68,16 @@ func (excel *xlsxExcel) Export(xlsxpath, name string, data [][]string) bool {
 func (excel *xlsxExcel) MultiExport(xlsxpath string, data ...exceler.ExportData) bool {
 	xlsx := excelize.NewFile()
 	for j, d := range data {
-		xlsx.SetSheetName("Sheet"+strconv.Itoa(j+1), d.Name)
+		_ = xlsx.SetSheetName("Sheet"+strconv.Itoa(j+1), d.Name)
 		for i, w := range d.Width {
 			ename, _ := excelize.ColumnNumberToName(i + 1)
-			xlsx.SetColWidth(d.Name, "A", ename, w)
+			_ = xlsx.SetColWidth(d.Name, "A", ename, w)
 		}
 		for i, l := range d.Data {
 			line := strconv.Itoa(i + 1)
 			for k, v := range l {
 				ename, _ := excelize.ColumnNumberToName(k + 1)
-				xlsx.SetCellValue(d.Name, ename+line, v)
+				_ = xlsx.SetCellValue(d.Name, ename+line, v)
 			}
 		}
 		// 冻结第一行
@@ -86,7 +86,7 @@ func (excel *xlsxExcel) MultiExport(xlsxpath string, data ...exceler.ExportData)
 				{SQRef: "A1:XFD1", ActiveCell: "A1", Pane: "bottomLeft"},
 			},
 		}
-		xlsx.SetPanes(d.Name, panes)
+		_ = xlsx.SetPanes(d.Name, panes)
 	}
 	xlsx.SetActiveSheet(0)
 	return xlsx.SaveAs(xlsxpath) == nil
@@ -94,18 +94,18 @@ func (excel *xlsxExcel) MultiExport(xlsxpath string, data ...exceler.ExportData)
 
 func (excel *xlsxExcel) AdvancedExport(xlsxpath, name string, header []string, names map[string]string, widths map[string]float64, data [][]string) bool {
 	xlsx := excelize.NewFile()
-	xlsx.SetSheetName("Sheet1", name)
+	_ = xlsx.SetSheetName("Sheet1", name)
 	for k, v := range header {
 		nname := names[v]
 		col, _ := excelize.ColumnNumberToName(k + 1)
 		comment := excelize.Comment{Cell: col+"1", Author: "Field:", Text: v}
-		xlsx.AddComment(name, comment)
-		xlsx.SetCellValue(name, col+"1", nname)
+		_ = xlsx.AddComment(name, comment)
+		_ = xlsx.SetCellValue(name, col+"1", nname)
 		width := widths[v]
 		if width < 1 {
 			width = 10
 		}
-		xlsx.SetColWidth(name, col, col, width)
+		_ = xlsx.SetColWidth(name, col, col, width)
 	}
 	// 冻结第一行
 	panes := &excelize.Panes{
@@ -113,12 +113,12 @@ func (excel *xlsxExcel) AdvancedExport(xlsxpath, name string, header []string, n
 			{SQRef: "A1:XFD1", ActiveCell: "A1", Pane: "bottomLeft"},
 		},
 	}
-	xlsx.SetPanes(name, panes)
+	_ = xlsx.SetPanes(name, panes)
 	for i, l := range data {
 		line := strconv.Itoa(i + 2)
 		for k, v := range l {
 			col, _ := excelize.ColumnNumberToName(k + 1)
-			xlsx.SetCellValue(name, col+line, v)
+			_ = xlsx.SetCellValue(name, col+line, v)
 		}
 	}
 	xlsx.SetActiveSheet(0)

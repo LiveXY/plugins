@@ -22,13 +22,13 @@ const lockSeconds = 10
 type redisCache struct {
 	client  *redis.Client
 	cluster *redis.ClusterClient
-	logger *zap.Logger
+	logger  *zap.Logger
 	prefix  string
 }
 
 // REDIS实例
 func NewRedisCache(cfg cacher.CacheConfig, logger *zap.Logger) (cacher.Cacher, error) {
-	cache := &redisCache{ logger: logger, prefix: cfg.Prefix }
+	cache := &redisCache{logger: logger, prefix: cfg.Prefix}
 	if len(cfg.Addr) == 0 {
 		return nil, errors.New("请在config.yaml中配置cache缓存")
 	}
@@ -463,10 +463,14 @@ func (cache *redisCache) LockEnd(key string) {
 // 关闭释放连接
 func (cache *redisCache) Close() {
 	if cache.client != nil {
-		cache.client.Close()
+		if err := cache.client.Close(); err != nil {
+			cache.logger.Error("关闭连接失败：", zap.Error(err))
+		}
 	}
 	if cache.cluster != nil {
-		cache.cluster.Close()
+		if err := cache.cluster.Close(); err != nil {
+			cache.logger.Error("关闭集群连接失败：", zap.Error(err))
+		}
 	}
 }
 

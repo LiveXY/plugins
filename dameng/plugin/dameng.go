@@ -54,7 +54,7 @@ func (p damengDb) Init(logname string, dbconf dber.DBConfig, logger logger.Inter
 	if len(replicas) > 0 {
 		conf.Replicas = replicas
 	}
-	db.Use(dbresolver.Register(conf).
+	err = db.Use(dbresolver.Register(conf).
 		SetMaxIdleConns(dbconf.MaxIdleConns).
 		SetMaxOpenConns(dbconf.MaxOpenConns).
 		SetConnMaxLifetime(time.Hour))

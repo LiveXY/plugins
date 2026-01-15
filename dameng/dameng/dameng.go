@@ -3,6 +3,7 @@ package dameng
 import (
 	"database/sql"
 	"fmt"
+	"math"
 	"regexp"
 	"strconv"
 	"strings"
@@ -78,7 +79,7 @@ func (d Dialector) ClauseBuilders() map[string]clause.ClauseBuilder {
 
 func (d Dialector) RewriteWhere(c clause.Clause, builder clause.Builder) {
 	if where, ok := c.Expression.(clause.Where); ok {
-		builder.WriteString(" WHERE ")
+		_, _ = builder.WriteString(" WHERE ")
 		// Switch position if the first query expression is a single Or condition
 		for idx, expr := range where.Exprs {
 			if v, ok := expr.(clause.OrConditions); !ok || len(v.Exprs) > 1 {
@@ -92,9 +93,9 @@ func (d Dialector) RewriteWhere(c clause.Clause, builder clause.Builder) {
 		for idx, expr := range where.Exprs {
 			if idx > 0 {
 				if v, ok := expr.(clause.OrConditions); ok && len(v.Exprs) == 1 {
-					builder.WriteString(" OR ")
+					_, _ = builder.WriteString(" OR ")
 				} else {
-					builder.WriteString(" AND ")
+					_, _ = builder.WriteString(" AND ")
 				}
 			}
 			if len(where.Exprs) > 1 {
@@ -119,9 +120,9 @@ func (d Dialector) RewriteWhere(c clause.Clause, builder clause.Builder) {
 				}
 			}
 			if wrapInParentheses {
-				builder.WriteString(`(`)
+				_, _ = builder.WriteString(`(`)
 				expr.Build(builder)
-				builder.WriteString(`)`)
+				_, _ = builder.WriteString(`)`)
 				wrapInParentheses = false
 			} else {
 				if e, ok := expr.(clause.IN); ok {
@@ -147,26 +148,26 @@ func (d Dialector) RewriteLimit(c clause.Clause, builder clause.Builder) {
 		if stmt, ok := builder.(*gorm.Statement); ok {
 			if _, ok := stmt.Clauses["ORDER BY"]; !ok {
 				s := stmt.Schema
-				builder.WriteString("ORDER BY ")
+				_, _ = builder.WriteString("ORDER BY ")
 				if s != nil && s.PrioritizedPrimaryField != nil {
 					builder.WriteQuoted(s.PrioritizedPrimaryField.DBName)
-					builder.WriteByte(' ')
+					_ = builder.WriteByte(' ')
 				} else {
-					builder.WriteString("(SELECT NULL FROM ")
-					builder.WriteString(d.DummyTableName())
-					builder.WriteString(")")
+					_, _ = builder.WriteString("(SELECT NULL FROM ")
+					_, _ = builder.WriteString(d.DummyTableName())
+					_, _ = builder.WriteString(")")
 				}
 			}
 		}
 		if offset := limit.Offset; offset > 0 {
-			builder.WriteString(" OFFSET ")
-			builder.WriteString(strconv.Itoa(offset))
-			builder.WriteString(" ROWS")
+			_, _ = builder.WriteString(" OFFSET ")
+			_, _ = builder.WriteString(strconv.Itoa(offset))
+			_, _ = builder.WriteString(" ROWS")
 		}
 		if limit := *limit.Limit; limit > 0 {
-			builder.WriteString(" FETCH NEXT ")
-			builder.WriteString(strconv.Itoa(limit))
-			builder.WriteString(" ROWS ONLY")
+			_, _ = builder.WriteString(" FETCH NEXT ")
+			_, _ = builder.WriteString(strconv.Itoa(limit))
+			_, _ = builder.WriteString(" ROWS ONLY")
 		}
 	}
 }
@@ -188,12 +189,12 @@ func (d Dialector) Migrator(db *gorm.DB) gorm.Migrator {
 }
 
 func (d Dialector) BindVarTo(writer clause.Writer, stmt *gorm.Statement, v any) {
-	writer.WriteString(":")
-	writer.WriteString(strconv.Itoa(len(stmt.Vars)))
+	_, _ = writer.WriteString(":")
+	_, _ = writer.WriteString(strconv.Itoa(len(stmt.Vars)))
 }
 
 func (d Dialector) QuoteTo(writer clause.Writer, str string) {
-	writer.WriteString(str)
+	_, _ = writer.WriteString(str)
 }
 
 var numericPlaceholder = regexp.MustCompile(`:(\d+)`)
@@ -213,9 +214,7 @@ func (d Dialector) Explain(sql string, vars ...any) string {
 }
 
 func (d Dialector) DataTypeOf(field *schema.Field) string {
-	if _, found := field.TagSettings["RESTRICT"]; found {
-		delete(field.TagSettings, "RESTRICT")
-	}
+	delete(field.TagSettings, "RESTRICT")
 	var sqlType string
 	addAutoIncrementWhenAvailable := func() {
 		if field.AutoIncrement {
@@ -237,7 +236,11 @@ func (d Dialector) DataTypeOf(field *schema.Field) string {
 		defaultSize := d.DefaultStringSize
 		if size == 0 {
 			if defaultSize > 0 {
-				size = int(defaultSize)
+				if defaultSize > uint(math.MaxInt) {
+					size = math.MaxInt
+				} else {
+					size = int(defaultSize)
+				}
 			} else {
 				hasIndex := field.TagSettings["INDEX"] != "" || field.TagSettings["UNIQUE"] != ""
 				// TEXT, GEOMETRY or JSON column can't have a default value

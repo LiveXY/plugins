@@ -56,26 +56,26 @@ func contains(all, sub []clause.Column) bool {
 	return true
 }
 func damengCreateMerge(db *gorm.DB, onConflict clause.OnConflict, values clause.Values) {
-	db.Statement.WriteString("MERGE INTO ")
+	_, _ = db.Statement.WriteString("MERGE INTO ")
 	db.Statement.WriteQuoted(db.Statement.Table)
-	db.Statement.WriteString(" USING (")
+	_, _ = db.Statement.WriteString(" USING (")
 	for i, vs := range values.Values {
 		if i > 0 {
-			db.Statement.WriteString(" UNION ")
+			_, _ = db.Statement.WriteString(" UNION ")
 		}
-		db.Statement.WriteString("SELECT ")
+		_, _ = db.Statement.WriteString("SELECT ")
 		for j, v := range vs {
 			if j > 0 {
-				db.Statement.WriteByte(',')
+				_ = db.Statement.WriteByte(',')
 			}
 			db.Statement.AddVar(db.Statement, v)
-			db.Statement.WriteString(" AS ")
+			_, _ = db.Statement.WriteString(" AS ")
 			db.Statement.WriteQuoted(values.Columns[j].Name)
 		}
-		db.Statement.WriteString(" FROM ")
-		db.Statement.WriteString(db.Dialector.(*Dialector).DummyTableName())
+		_, _ = db.Statement.WriteString(" FROM ")
+		_, _ = db.Statement.WriteString(db.Dialector.(*Dialector).DummyTableName())
 	}
-	db.Statement.WriteString(") AS excluded ON (")
+	_, _ = db.Statement.WriteString(") AS excluded ON (")
 	var where clause.Where
 	colkv := make(map[string]struct{}, len(onConflict.Columns))
 	for _, field := range onConflict.Columns {
@@ -86,9 +86,9 @@ func damengCreateMerge(db *gorm.DB, onConflict clause.OnConflict, values clause.
 		colkv[field.Name] = struct{}{}
 	}
 	where.Build(db.Statement)
-	db.Statement.WriteString(")")
+	_, _ = db.Statement.WriteString(")")
 	if len(onConflict.DoUpdates) > 0 {
-		db.Statement.WriteString(" WHEN MATCHED THEN UPDATE SET ")
+		_, _ = db.Statement.WriteString(" WHEN MATCHED THEN UPDATE SET ")
 		var newUpdates clause.Set
 		for _, v := range onConflict.DoUpdates {
 			if _, ok := colkv[v.Column.Name]; ok {
@@ -105,7 +105,7 @@ func damengCreateMerge(db *gorm.DB, onConflict clause.OnConflict, values clause.
 		}
 		newUpdates.Build(db.Statement)
 	}
-	db.Statement.WriteString(" WHEN NOT MATCHED THEN INSERT (")
+	_, _ = db.Statement.WriteString(" WHEN NOT MATCHED THEN INSERT (")
 	written := false
 	if db.Statement.Schema.PrioritizedPrimaryField != nil {
 		ai, ok := db.Statement.Schema.PrioritizedPrimaryField.TagSettings["AUTOINCREMENT"]
@@ -117,24 +117,24 @@ func damengCreateMerge(db *gorm.DB, onConflict clause.OnConflict, values clause.
 	for _, column := range values.Columns {
 		if db.Statement.Schema.PrioritizedPrimaryField == nil || !db.Statement.Schema.PrioritizedPrimaryField.AutoIncrement || db.Statement.Schema.PrioritizedPrimaryField.DBName != column.Name {
 			if written {
-				db.Statement.WriteByte(',')
+				_ = db.Statement.WriteByte(',')
 			}
 			written = true
 			db.Statement.WriteQuoted(column.Name)
 		}
 	}
-	db.Statement.WriteString(") VALUES (")
+	_, _ = db.Statement.WriteString(") VALUES (")
 	written = false
 	for _, column := range values.Columns {
 		if db.Statement.Schema.PrioritizedPrimaryField == nil || !db.Statement.Schema.PrioritizedPrimaryField.AutoIncrement || db.Statement.Schema.PrioritizedPrimaryField.DBName != column.Name {
 			if written {
-				db.Statement.WriteByte(',')
+				_ = db.Statement.WriteByte(',')
 			}
 			written = true
 			db.Statement.WriteQuoted(clause.Column{Table: "excluded", Name: column.Name})
 		}
 	}
-	db.Statement.WriteString(");")
+	_, _ = db.Statement.WriteString(");")
 }
 func createInsert(db *gorm.DB, hasDefaultValues bool, values clause.Values, boundVars map[string]int) {
 	db.Statement.AddClauseIfNotExists(clause.Insert{Table: clause.Table{Name: db.Statement.Table}})

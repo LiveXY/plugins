@@ -129,7 +129,7 @@ func (m Migrator) BuildIndexOptions(opts []schema.IndexOption, stmt *gorm.Statem
 
 func (m Migrator) HasIndex(value interface{}, name string) bool {
 	var count int64
-	m.RunWithValue(value, func(stmt *gorm.Statement) error {
+	_ = m.RunWithValue(value, func(stmt *gorm.Statement) error {
 		if stmt.Schema != nil {
 			if idx := stmt.Schema.LookIndex(name); idx != nil {
 				name = idx.Name
@@ -254,7 +254,7 @@ func (m Migrator) CreateTable(values ...interface{}) (err error) {
 
 func (m Migrator) HasTable(value interface{}) bool {
 	var count int64
-	m.RunWithValue(value, func(stmt *gorm.Statement) error {
+	_ = m.RunWithValue(value, func(stmt *gorm.Statement) error {
 		currentSchema, curTable := m.CurrentSchema(stmt, stmt.Table)
 		return m.DB.Raw("SELECT count(*) FROM information_schema.tables WHERE table_schema = ? AND table_name = ? AND table_type = ?", currentSchema, curTable, "BASE TABLE").Scan(&count).Error
 	})
@@ -317,7 +317,7 @@ func (m Migrator) AddColumn(value interface{}, field string) error {
 
 func (m Migrator) HasColumn(value interface{}, field string) bool {
 	var count int64
-	m.RunWithValue(value, func(stmt *gorm.Statement) error {
+	_ = m.RunWithValue(value, func(stmt *gorm.Statement) error {
 		name := field
 		if stmt.Schema != nil {
 			if field := stmt.Schema.LookUpField(field); field != nil {
@@ -369,15 +369,12 @@ func (m Migrator) MigrateColumn(value interface{}, field *schema.Field, columnTy
 
 func (m Migrator) HasConstraint(value interface{}, name string) bool {
 	var count int64
-	m.RunWithValue(value, func(stmt *gorm.Statement) error {
-		constraint, chk, table := m.GuessConstraintAndTable(stmt, name)
+	_ = m.RunWithValue(value, func(stmt *gorm.Statement) error {
+		constraint, table := m.GuessConstraintInterfaceAndTable(stmt, name)
 		currentSchema, curTable := m.CurrentSchema(stmt, table)
 		if constraint != nil {
-			name = constraint.Name
-		} else if chk != nil {
-			name = chk.Name
+			name = constraint.GetName()
 		}
-
 		return m.DB.Raw(
 			"SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE table_schema = ? AND table_name = ? AND constraint_name = ?",
 			currentSchema, curTable, name,

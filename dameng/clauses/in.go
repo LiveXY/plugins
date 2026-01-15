@@ -12,21 +12,20 @@ func (in IN) Build(builder clause.Builder) {
 	builder.WriteQuoted(in.Column)
 	switch len(in.Values) {
 	case 0:
-		builder.WriteString(" IN (NULL)")
+		_, _ = builder.WriteString(" IN (NULL)")
 	case 1:
 		if _, ok := in.Column.([]clause.Column); ok {
-			builder.WriteString(" = (")
+			_, _ = builder.WriteString(" = (")
 			builder.AddVar(builder, in.Values...)
-			builder.WriteString(")")
+			_, _ = builder.WriteString(")")
 		} else {
-			builder.WriteString(" = ")
+			_, _ = builder.WriteString(" = ")
 			builder.AddVar(builder, in.Values...)
 		}
 
 	default:
-		builder.WriteString(" IN (")
+		_, _ = builder.WriteString(" IN (")
 		builder.AddVar(builder, in.Values...)
-		builder.WriteByte(')')
-
+		_ = builder.WriteByte(')')
 	}
 }

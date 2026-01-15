@@ -14,7 +14,7 @@ type Migrator struct {
 }
 
 func (m Migrator) CurrentDatabase() (name string) {
-	m.DB.Raw(
+	_ = m.DB.Raw(
 		fmt.Sprintf(`SELECT ORA_DATABASE_NAME as "Current Database" FROM %s`, m.Dialector.(Dialector).DummyTableName()),
 	).Row().Scan(&name)
 	return
@@ -51,7 +51,7 @@ func (m Migrator) DropTable(values ...any) error {
 func (m Migrator) HasTable(value any) bool {
 	var count int64
 
-	m.RunWithValue(value, func(stmt *gorm.Statement) error {
+	_ = m.RunWithValue(value, func(stmt *gorm.Statement) error {
 		return m.DB.Raw("SELECT COUNT(*) FROM USER_TABLES WHERE TABLE_NAME = ?", stmt.Table).Row().Scan(&count)
 	})
 
@@ -198,7 +198,7 @@ func (m Migrator) DropIndex(value any, name string) error {
 
 func (m Migrator) HasIndex(value any, name string) bool {
 	var count int64
-	m.RunWithValue(value, func(stmt *gorm.Statement) error {
+	_ = m.RunWithValue(value, func(stmt *gorm.Statement) error {
 		if idx := stmt.Schema.LookIndex(name); idx != nil {
 			name = idx.Name
 		}

@@ -13,8 +13,8 @@ require (
 	github.com/goccy/go-json v0.10.5
 	github.com/golang/snappy v1.0.0
 	github.com/gonfva/docxlib v0.0.0-20210517191039-d8f39cecf1ad
-	github.com/livexy/linq v1.0.6
-	github.com/livexy/pkg v1.1.0
+	github.com/livexy/linq v1.0.7
+	github.com/livexy/pkg v1.1.2
 	github.com/livexy/plugin v1.0.8
 	github.com/rs/xid v1.6.0
 	github.com/thoas/go-funk v0.9.3

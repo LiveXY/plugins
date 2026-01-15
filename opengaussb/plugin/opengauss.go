@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/livexy/plugin/dber"
-	"github.com/livexy/plugins/opengaussb/openguass"
+	"github.com/livexy/plugins/opengaussb/opengauss"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -22,7 +22,7 @@ func New() dber.Dber {
 }
 
 func (p gaussDb) Init(logname string, dbconf dber.DBConfig, logger logger.Interface) (*gorm.DB, error) {
-	db, err := gorm.Open(openguass.New(openguass.Config{DSN: dbconf.Sources[0]}), &gorm.Config{
+	db, err := gorm.Open(opengauss.New(opengauss.Config{DSN: dbconf.Sources[0]}), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
@@ -39,26 +39,26 @@ func (p gaussDb) Init(logname string, dbconf dber.DBConfig, logger logger.Interf
 		if k == 0 {
 			continue
 		}
-		sources = append(sources, openguass.New(openguass.Config{DSN: v}))
+		sources = append(sources, opengauss.New(opengauss.Config{DSN: v}))
 	}
 	if len(sources) > 0 {
 		conf.Sources = sources
 	}
 	replicas := []gorm.Dialector{}
 	for _, v := range dbconf.Replicas {
-		replicas = append(replicas, openguass.New(openguass.Config{DSN: v}))
+		replicas = append(replicas, opengauss.New(opengauss.Config{DSN: v}))
 	}
 	if len(replicas) > 0 {
 		conf.Replicas = replicas
 	}
-	db.Use(dbresolver.Register(conf).
+	err = db.Use(dbresolver.Register(conf).
 		SetMaxIdleConns(dbconf.MaxIdleConns).
 		SetMaxOpenConns(dbconf.MaxOpenConns).
 		SetConnMaxLifetime(time.Hour))
 	return db, err
 }
 func (p gaussDb) ExAdd(field string, val any) clause.Expr {
-	return gorm.Expr(field + `+?`, val)
+	return gorm.Expr(field+`+?`, val)
 }
 func (p gaussDb) IfNull() string {
 	return "ifnull"

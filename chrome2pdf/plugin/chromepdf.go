@@ -2,7 +2,7 @@ package plugin
 
 import (
 	"context"
-	"io/ioutil"
+	"os"
 	"path"
 
 	"github.com/chromedp/cdproto/page"
@@ -14,7 +14,7 @@ func NewChromePdf() pdfer.PDFer {
 	return &ChromePdf{}
 }
 
-type ChromePdf struct {}
+type ChromePdf struct{}
 
 func (o *ChromePdf) Html2Pdf(htmlpath, outpath string) error {
 	ctx, cancel := chromedp.NewContext(context.Background())
@@ -36,5 +36,5 @@ func (o *ChromePdf) Html2Pdf(htmlpath, outpath string) error {
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(outpath, buf, 0644)
+	return os.WriteFile(outpath, buf, 0600)
 }
