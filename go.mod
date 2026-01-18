@@ -13,10 +13,10 @@ require (
 	github.com/goccy/go-json v0.10.5
 	github.com/golang/snappy v1.0.0
 	github.com/gonfva/docxlib v0.0.0-20210517191039-d8f39cecf1ad
-	github.com/livexy/linq v1.0.7
-	github.com/livexy/pkg v1.1.2
+	github.com/livexy/linq v1.0.9
+	github.com/livexy/pkg v1.1.3
 	github.com/livexy/plugin v1.0.8
-	github.com/livexy/plugins/opengaussb/opengauss v0.0.0-20260115073646-0815b89376a7
+	github.com/livexy/plugins/opengaussb/opengauss v0.0.0-20260115075628-776c88b5a30c
 	github.com/rs/xid v1.6.0
 	github.com/thoas/go-funk v0.9.3
 	github.com/xuri/excelize/v2 v2.10.0
@@ -50,7 +50,6 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/klauspost/cpuid/v2 v2.3.0 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/puzpuzpuz/xsync/v4 v4.3.0 // indirect
 	github.com/richardlehane/mscfb v1.0.6 // indirect
 	github.com/richardlehane/msoleps v1.0.6 // indirect
@@ -64,7 +63,6 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/arch v0.23.0 // indirect
 	golang.org/x/crypto v0.47.0 // indirect
-	golang.org/x/exp v0.0.0-20260112195511-716be5621a96 // indirect
 	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
 	golang.org/x/sys v0.40.0 // indirect
