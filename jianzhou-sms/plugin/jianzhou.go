@@ -12,6 +12,7 @@ import (
 	"github.com/livexy/pkg/template"
 )
 
+// NewSMS 创建一个新的建周短信服务实例
 func NewSMS(cfg smser.SMSConfig) smser.SMSer {
 	sms := &SMS{cfg: cfg}
 	return sms
@@ -21,6 +22,10 @@ type SMS struct {
 	cfg smser.SMSConfig
 }
 
+// Send 发送短信
+// temp: 模板内容
+// mobile: 目标手机号
+// data: 模板替换数据
 func (o *SMS) Send(temp, mobile string, data map[string]any) error {
 	if len(mobile) < 5 {
 		return errors.New("参数错误！")
@@ -39,7 +44,7 @@ func (o *SMS) Send(temp, mobile string, data map[string]any) error {
 	body = url.QueryEscape(subject + body)
 	api := "http://www.jianzhou.sh.cn/JianzhouSMSWSServer/http/sendBatchMessage"
 	params := "account=" + o.cfg.AccessID + "&password=" + o.cfg.AccessSecret + "&destmobile=" + mobile + "&msgText=" + body + "&sendDateTime="
-	result, err := request.HttpPost(api, params, 10, request.Header{Name: "Content-Type", Value: "application/x-www-form-urlencoded"})
+	result, err := request.Post(api, params, 10, request.Header{Name: "Content-Type", Value: "application/x-www-form-urlencoded"})
 	if err != nil {
 		return err
 	}

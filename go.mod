@@ -5,18 +5,18 @@ go 1.25
 require (
 	gitee.com/chunanyong/dm v1.8.22
 	github.com/bwmarrin/snowflake v0.3.0
-	github.com/bytedance/sonic v1.14.2
+	github.com/bytedance/sonic v1.15.0
 	github.com/chromedp/cdproto v0.0.0-20250803210736-d308e07a266d
 	github.com/chromedp/chromedp v0.14.2
 	github.com/emirpasic/gods v1.18.1
-	github.com/go-redis/redis/v8 v8.11.5
 	github.com/goccy/go-json v0.10.5
 	github.com/golang/snappy v1.0.0
 	github.com/gonfva/docxlib v0.0.0-20210517191039-d8f39cecf1ad
-	github.com/livexy/linq v1.0.9
-	github.com/livexy/pkg v1.1.3
-	github.com/livexy/plugin v1.0.8
-	github.com/livexy/plugins/opengaussb/opengauss v0.0.0-20260115075628-776c88b5a30c
+	github.com/livexy/linq v1.1.5
+	github.com/livexy/pkg v1.1.4
+	github.com/livexy/plugin v1.1.0
+	github.com/livexy/plugins/opengaussb/opengauss v0.0.0-20260118060101-6a140b0a683a
+	github.com/redis/go-redis/v9 v9.17.2
 	github.com/rs/xid v1.6.0
 	github.com/thoas/go-funk v0.9.3
 	github.com/xuri/excelize/v2 v2.10.0
@@ -32,7 +32,7 @@ require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	gitee.com/opengauss/openGauss-connector-go-pq v1.0.7 // indirect
 	github.com/bytedance/gopkg v0.1.3 // indirect
-	github.com/bytedance/sonic/loader v0.4.0 // indirect
+	github.com/bytedance/sonic/loader v0.5.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/chromedp/sysutil v1.1.0 // indirect
 	github.com/cloudwego/base64x v0.1.6 // indirect

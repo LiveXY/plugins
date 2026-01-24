@@ -7,7 +7,6 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 	"gorm.io/plugin/dbresolver"
@@ -17,18 +16,24 @@ type mysqlDb struct {
 	db *gorm.DB
 }
 
+// New 创建一个新的 MySQL 数据库适配实例
 func New() dber.Dber {
 	return &mysqlDb{}
 }
 
-func (p mysqlDb) Init(logname string, dbconf dber.DBConfig, logger logger.Interface) (*gorm.DB, error) {
+// Init 初始化数据库连接
+func (p mysqlDb) Init(logname string, dbconf dber.DBConfig, val any) (any, error) {
+	var l logger.Interface
+	if v, ok := val.(logger.Interface); ok {
+		l = v
+	}
 	db, err := gorm.Open(mysql.Open(dbconf.Sources[0]), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
 		SkipDefaultTransaction: true,
 		PrepareStmt:            true,
-		Logger:                 logger,
+		Logger:                 l,
 	})
 	if err != nil {
 		return nil, err
@@ -57,23 +62,36 @@ func (p mysqlDb) Init(logname string, dbconf dber.DBConfig, logger logger.Interf
 		SetConnMaxLifetime(time.Hour))
 	return db, err
 }
-func (p mysqlDb) ExAdd(field string, val any) clause.Expr {
-	return gorm.Expr(field + `+?`, val)
+
+// ExAdd 返回用于 GORM 的字段自增表达式
+func (p mysqlDb) ExAdd(field string, val any) any {
+	return gorm.Expr(field+`+?`, val)
 }
+
+// IfNull 返回 MySQL 的 IFNULL 函数名
 func (p mysqlDb) IfNull() string {
 	return "ifnull"
 }
+
+// If 返回 MySQL 的 IF 函数名
 func (p mysqlDb) If() string {
 	return "if"
 }
+
+// GroupConcat 返回 MySQL 的 GroupConcat 表达式
 func (p mysqlDb) GroupConcat(field string) string {
 	return "group_concat(" + field + ")"
 }
+
+// GetSlots 获取数据库支持的最大插槽数
 func (p mysqlDb) GetSlots() int {
 	return 65536
 }
+
+// ClobScan 处理 CLOB 类型的扫描（MySQL 默认返回 nil）
 func (p mysqlDb) ClobScan(clob *dber.Clob, v any) error { return nil }
 
+// GetCreateID 插入数据并获取自增 ID
 func (p mysqlDb) GetCreateID(value any, table, pk string) int64 {
 	tx := p.db.Begin()
 	id := getInsertID(tx.Create(value), table, pk)

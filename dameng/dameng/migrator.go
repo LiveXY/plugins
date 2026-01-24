@@ -215,13 +215,7 @@ func (m Migrator) HasIndex(value any, name string) bool {
 
 // https://docs.oracle.com/database/121/SPATL/alter-index-rename.htm
 func (m Migrator) RenameIndex(value any, oldName, newName string) error {
-	panic("TODO")
-	return m.RunWithValue(value, func(stmt *gorm.Statement) error {
-		return m.DB.Exec(
-			"ALTER INDEX ?.? RENAME TO ?", // wat
-			clause.Table{Name: stmt.Table}, clause.Column{Name: oldName}, clause.Column{Name: newName},
-		).Error
-	})
+	return fmt.Errorf("TODO: RenameIndex not implemented for Dameng")
 }
 
 func (m Migrator) TryRemoveOnUpdate(value any) error {
